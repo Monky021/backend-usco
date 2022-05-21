@@ -15,15 +15,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const login_1 = __importDefault(require("../routes/login"));
+const crear_1 = __importDefault(require("../routes/crear"));
+const connection_1 = __importDefault(require("../database/connection"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
         this.port = process.env.PORT || '4001';
         this.path = {
-            login: '/api/login'
+            login: '/api/login',
+            crear: '/api/crear'
         };
         //Conectar base de datos
-        // this.connectionDB();
+        this.connectionDB();
         //Middlewares
         this.middlewares();
         //Rutas de mi servidor
@@ -31,6 +34,13 @@ class Server {
     }
     connectionDB() {
         return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield connection_1.default.authenticate();
+                console.log('Base de datos conectada!');
+            }
+            catch (error) {
+                throw new Error(error);
+            }
             // await dbConnection();
         });
     }
@@ -44,7 +54,7 @@ class Server {
     }
     routes() {
         this.app.use(this.path.login, login_1.default);
-        // this.app.use(this.paths.users, require('../routes/user.routes'));
+        this.app.use(this.path.crear, crear_1.default);
         // this.app.use(this.paths.categories, require('../routes/categories.routes'));
         // this.app.use(this.paths.product, require('../routes/product.routes'));
         // this.app.use(this.paths.search, require('../routes/search.routes'));

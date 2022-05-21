@@ -1,22 +1,58 @@
 import { Request, Response } from "express";
+import { generarJWT } from "../middlewares/generar-jwt";
+import Estudiante from "../models/estudiantes";
 
-export const login = (req: Request, res: Response ) => {
+export const login = async (req: Request, res: Response ) => {
 
-    const {correo, cedula} = req.body
+    const {correo, password} = req.body
 
 
-    //TODO: VALIDACION DE CORREO Y CEDULA
+    try {
+        //TODO: VALIDACION DE CORREO Y CEDULA
 
-    //TODO: VALIDAR SI EL USUARIO EXISTE
+        const estudiante = await Estudiante.findOne({
+            where: {
+                correo
+            }
+        })
+        //TODO: VALIDAR SI EL USUARIO EXISTE
+        if (!estudiante) {
+            return res.status(404).json({
+                mensaje: 'Correo y/o contraseña no coinciden' 
+            })
+        }
 
-    //TODO: VALIDAR SI LA CEDULA ES CORRECTA
+        
+        //TODO: VALIDAR SI LA CONTRASEÑA ES CORRECTA
 
-    //TODO: GENERAR TOKEN JWT
+        const passwordDb = estudiante.getDataValue('numero_documento')
+        console.log(password ,passwordDb)
+        if (password !== passwordDb ) {
+            return res.status(400).json({
+                mensaje: 'Correo y/o contraseña no coinciden'
+            })
+        }
+        
+        const uid = estudiante.getDataValue('id')
+
+        //TODO: GENERAR TOKEN JWT
+        const token = await generarJWT(uid)
+        
+
+        return res.status(200).json({
+            exitoso: true,
+            estudiante,
+            msg: 'Todo bien',
+            token,
+            
+        })
+        
+    } catch (error) {
+        console.log(error)
+    }
+
+
+
     
-    return res.status(200).json({
-        exitoso: true,
-        msg: 'Todo bien',
-        correo,
-        cedula
-    })
 }
+
