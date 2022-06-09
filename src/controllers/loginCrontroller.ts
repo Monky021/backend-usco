@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { generarJWT } from "../middlewares/generar-jwt";
+import { generarJWT } from "../helpers/generar-jwt";
 import Estudiante from "../models/estudiantes";
 
 export const login = async (req: Request, res: Response ) => {
@@ -33,8 +33,8 @@ export const login = async (req: Request, res: Response ) => {
             })
         }
         
-        const uid = estudiante.getDataValue('id')
-
+        const uid = estudiante.getDataValue('estudiante_id')
+        console.log('id login', uid)
         //TODO: GENERAR TOKEN JWT
         const token = await generarJWT(uid)
         

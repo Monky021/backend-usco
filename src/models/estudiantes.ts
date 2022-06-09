@@ -1,10 +1,15 @@
 import {DataTypes} from 'sequelize'
-import db from '../database/connection'
 import TipoDocumento from './tipoDocumento'
+import db from '../database/connection'
 
 
 
 const Estudiante = db.define('Estudiante', {
+    estudiante_id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
 
     nombre: {
         type: DataTypes.STRING,
@@ -26,14 +31,14 @@ const Estudiante = db.define('Estudiante', {
         type: DataTypes.INTEGER,
         references: {
             model: TipoDocumento,
-            key: 'id'
+            key: 'tipo_documento_id'
         }
     } 
 
 
 })
 
-TipoDocumento.hasMany(Estudiante)
+TipoDocumento.hasMany(Estudiante, {foreignKey: 'tipo_documento_id'})
 TipoDocumento.belongsTo(Estudiante, {foreignKey: 'tipo_documento_id', constraints: false})
 // Estudiante.hasOne(TipoDocumento)
 

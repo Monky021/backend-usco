@@ -5,7 +5,11 @@ import Encuestas from './encuestas'
 
 
 const Preguntas = db.define('Preguntas', {
-
+    pregunta_id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
     pregunta: {
         type: DataTypes.STRING,
 
@@ -15,7 +19,7 @@ const Preguntas = db.define('Preguntas', {
         type: DataTypes.INTEGER,
         references: {
             model: Encuestas,
-            key: 'id' 
+            key: 'encuesta_id' 
         }
     } 
 
