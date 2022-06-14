@@ -28,7 +28,7 @@ export const responderEncuesta = async(req: Request, res: Response) => {
                 estudiante_id: uid
             }
         })
-        console.log(respuestas)
+        
         
         res.json({
             respuestas,

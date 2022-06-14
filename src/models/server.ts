@@ -3,6 +3,8 @@ import cors from 'cors'
 import login from '../routes/login'
 import crear from '../routes/crear'
 import encuesta from '../routes/encuesta'
+import pqr from '../routes/pqr'
+
 
 import db from '../database/connection';
 
@@ -15,7 +17,8 @@ class Server {
     private path: {
         login: string,
         crear: string,
-        encuesta: string
+        encuesta: string,
+        pqr: string,
     }
     constructor(){
         this.app = express();
@@ -23,7 +26,8 @@ class Server {
         this.path={
             login: '/api/login',
             crear: '/api/crear',
-            encuesta: '/api/encuesta'
+            encuesta: '/api/encuesta',
+            pqr: '/api/pqr'
         }
 
         //Conectar base de datos
@@ -39,9 +43,9 @@ class Server {
         try {
             await db.authenticate();
             console.log('Base de datos conectada')
-            db.sync({force: false}).then(() => {
+            db.sync({force: true, }).then(() => {
                 
-                console.log("Todos los modelos Sincronizados correctamente.");
+                console.log("Todos los modelos Sincronizados correctamente!.");
               }).catch(err => {
                 console.error('No fue posible sincronizar los modelos: ', err)
               })
@@ -67,6 +71,8 @@ class Server {
         this.app.use(this.path.login, login);
         this.app.use(this.path.crear, crear);
         this.app.use(this.path.encuesta, encuesta);
+        this.app.use(this.path.pqr, pqr);
+
 
         // this.app.use(this.paths.categories, require('../routes/categories.routes'));
         // this.app.use(this.paths.product, require('../routes/product.routes'));

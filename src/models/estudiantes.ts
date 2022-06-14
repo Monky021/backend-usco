@@ -1,6 +1,7 @@
 import {DataTypes} from 'sequelize'
 import TipoDocumento from './tipoDocumento'
 import db from '../database/connection'
+import Pqr from './pqr'
 
 
 
@@ -42,6 +43,11 @@ TipoDocumento.hasMany(Estudiante, {foreignKey: 'tipo_documento_id'})
 TipoDocumento.belongsTo(Estudiante, {foreignKey: 'tipo_documento_id', constraints: false})
 // Estudiante.hasOne(TipoDocumento)
 
+Pqr.hasMany(Estudiante)
+Estudiante.belongsTo(Pqr, {foreignKey: {
+    name: 'estudiante_id',
+    allowNull: false
+}} )
 
 
 export default Estudiante
