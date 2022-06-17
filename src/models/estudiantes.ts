@@ -28,13 +28,13 @@ const Estudiante = db.define('Estudiante', {
     numero_documento: {
         type: DataTypes.STRING
     },
-    documento_id:{
-        type: DataTypes.INTEGER,
-        references: {
-            model: TipoDocumento,
-            key: 'tipo_documento_id'
-        }
-    } 
+    // documento_id:{
+    //     type: DataTypes.INTEGER,
+    //     references: {
+    //         model: TipoDocumento,
+    //         key: 'tipo_documento_id'
+    //     }
+    // } 
 
 
 })
@@ -43,8 +43,8 @@ TipoDocumento.hasMany(Estudiante, {foreignKey: 'tipo_documento_id'})
 TipoDocumento.belongsTo(Estudiante, {foreignKey: 'tipo_documento_id', constraints: false})
 // Estudiante.hasOne(TipoDocumento)
 
-Pqr.hasMany(Estudiante)
-Estudiante.belongsTo(Pqr, {foreignKey: {
+Estudiante.hasMany(Pqr)
+Pqr.belongsTo(Estudiante, {foreignKey: {
     name: 'estudiante_id',
     allowNull: false
 }} )

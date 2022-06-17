@@ -43,7 +43,7 @@ class Server {
         try {
             await db.authenticate();
             console.log('Base de datos conectada')
-            db.sync({force: true, }).then(() => {
+            db.sync({force: false, }).then(() => {
                 
                 console.log("Todos los modelos Sincronizados correctamente!.");
               }).catch(err => {

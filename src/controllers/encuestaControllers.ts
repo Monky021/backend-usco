@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import Respuestas from "../models/respuestas";
 import { IRequest } from '../interfaces/IValidateJwt';
 import { IEncuesta } from '../interfaces/IEncuestas';
+import Preguntas from "../models/Preguntas";
+import { ids } from '../helpers/ids';
 
 
 export const responderEncuesta = async(req: Request, res: Response) => {
@@ -41,4 +43,19 @@ export const responderEncuesta = async(req: Request, res: Response) => {
         res.status(500).json({mensaje: 'Contacte al estudiante'})
     }
     
+}
+
+
+export const obtenerPreguntas = async(req: Request, res: Response) => {
+
+    const preguntas = await Preguntas.findAll({
+        where: {
+            encuesta_id: ids.encuestaPrincipal
+        }
+    })
+
+    res.status(201).json({
+        exitoso: true,
+        data: preguntas
+    })
 }
