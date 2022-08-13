@@ -1,5 +1,5 @@
 
 export interface IEncuesta {
-    pregunta: number,
+    pregunta_id: number,
     respuesta: number,
 } 

@@ -34,9 +34,12 @@ export const login = async (req: Request, res: Response ) => {
         }
         
         const uid = estudiante.getDataValue('estudiante_id')
-        console.log('id login', uid)
+        // console.log('id login', uid)
         //TODO: GENERAR TOKEN JWT
         const token = await generarJWT(uid)
+        
+
+        //TODO: ACTUALIZAR CAMPO DE RESPUESTA ENCUESTA
         
 
         return res.status(200).json({

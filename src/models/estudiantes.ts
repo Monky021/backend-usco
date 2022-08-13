@@ -28,6 +28,10 @@ const Estudiante = db.define('Estudiante', {
     numero_documento: {
         type: DataTypes.STRING
     },
+    responde_encuesta: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    }
     // documento_id:{
     //     type: DataTypes.INTEGER,
     //     references: {
