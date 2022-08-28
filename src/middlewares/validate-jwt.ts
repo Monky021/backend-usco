@@ -25,7 +25,7 @@ export const validateJWT = async(req: Request, res: Response, next: NextFunction
         console.log('id', uid)
         // // const user = await Estudiante.findById(uid);
         const estudiante = await Estudiante.findByPk(uid);
-        console.log('estudiante', estudiante)
+        
 
         if(!estudiante){
             return res.status(401).json({

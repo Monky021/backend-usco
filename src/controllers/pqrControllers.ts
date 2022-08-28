@@ -6,8 +6,11 @@ export const crearPqr = async(req: Request, res: Response) => {
 
     try {
 
-        const body = req.body
+        const body = {...req.body, estudiante_id: req.uid}
+
         const newPqr = await Pqr.create(body)
+
+        console.log(newPqr)
         return res.json({msg: 'Pqr creado', data: newPqr})
 
         
